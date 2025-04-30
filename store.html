@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .store-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .store-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            flex-grow: 1;
+            min-width: 250px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .category-filter select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-width: 200px;
+        }
+        
+        .sort-options select {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .product-seller {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-outline {
+            background: none;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            gap: 0.5rem;
+        }
+        
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+        }
+        
+        .page-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .store-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="store.html" class="active">Store</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="login.html">Login</a>
+            <a href="#" id="logoutBtn" style="display:none;">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="store-container">
+        <div class="store-header">
+            <h1>Website Templates & Code</h1>
+            <div class="search-filter">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                </div>
+                <div class="category-filter">
+                    <select id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="website-template">Website Templates</option>
+                        <option value="web-component">Web Components</option>
+                        <option value="code-snippet">Code Snippets</option>
+                        <option value="full-website">Full Websites</option>
+                    </select>
+                </div>
+                <div class="sort-options">
+                    <select id="sortOptions">
+                        <option value="newest">Newest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="products-grid" id="productsGrid">
+            <!-- Products will be loaded here via JavaScript -->
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/ecommerce.jpg" alt="E-commerce Template">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">E-commerce Template</h3>
+                    <p class="product-seller">By WebDesign Pro</p>
+                    <p class="product-price">$49.99</p>
+                    <p class="product-description">Complete e-commerce solution with shopping cart, product pages, and checkout functionality.</p>
+                    <div class="product-actions">
+                        <a href="preview.html?id=1" class="btn btn-outline">Preview</a>
+                        <a href="#" class="btn btn-primary">Purchase</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/portfolio.jpg" alt="Portfolio Template">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Portfolio Template</h3>
+                    <p class="product-seller">By Creative Designs</p>
+                    <p class="product-price">$29.99</p>
+                    <p class="product-description">Modern portfolio template for creatives with gallery, about, and contact sections.</p>
+                    <div class="product-actions">
+                        <a href="preview.html?id=2" class="btn btn-outline">Preview</a>
+                        <a href="#" class="btn btn-primary">Purchase</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="assets/blog.jpg" alt="Blog Template">
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">Blog Template</h3>
+                    <p class="product-seller">By CodeMaster</p>
+                    <p class="product-price">$39.99</p>
+                    <p class="product-description">Responsive blog template with categories, tags, and featured posts section.</p>
+                    <div class="product-actions">
+                        <a href="preview.html?id=3" class="btn btn-outline">Preview</a>
+                        <a href="#" class="btn btn-primary">Purchase</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn">Next</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <!-- Firebase and other JS libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+    <!-- Your JavaScript files -->
+    <script src="js/auth.js"></script>
+    <script src="js/store.js"></script>
+</body>
+</html>

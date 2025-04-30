@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .add-product-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .form-group textarea {
+            min-height: 150px;
+        }
+        .file-upload {
+            border: 2px dashed #ddd;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .file-upload:hover {
+            border-color: var(--primary);
+        }
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .preview-item {
+            position: relative;
+            border: 1px solid #eee;
+            padding: 0.5rem;
+        }
+        .preview-item img {
+            max-width: 100%;
+            height: auto;
+        }
+        .remove-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .tab-container {
+            margin-bottom: 1.5rem;
+        }
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        .tab.active {
+            border-bottom-color: var(--primary);
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+            padding: 1.5rem 0;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="seller-portal.html">Seller Portal</a>
+            <a href="add-product.html" class="active">Add Product</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="add-product-container">
+        <h1>Add New Product</h1>
+        <p>Fill in the details of your web design or coding product</p>
+        
+        <form id="productForm">
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="basic">Basic Info</div>
+                    <div class="tab" data-tab="details">Details</div>
+                    <div class="tab" data-tab="files">Files</div>
+                    <div class="tab" data-tab="preview">Preview</div>
+                </div>
+                
+                <div class="tab-content active" id="basic-tab">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Price ($)</label>
+                        <input type="number" id="productPrice" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productCategory">Category</label>
+                        <select id="productCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="website-template">Website Template</option>
+                            <option value="web-component">Web Component</option>
+                            <option value="code-snippet">Code Snippet</option>
+                            <option value="full-website">Full Website</option>
+                            <option value="custom-design">Custom Design</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="shortDescription">Short Description</label>
+                        <textarea id="shortDescription" maxlength="200" required></textarea>
+                        <small id="charCount">0/200 characters</small>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="details-tab">
+                    <div class="form-group">
+                        <label for="fullDescription">Full Description</label>
+                        <textarea id="fullDescription"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="features">Key Features (one per line)</label>
+                        <textarea id="features" placeholder="Responsive design\nClean code\nSEO optimized"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="tags">Tags (comma separated)</label>
+                        <input type="text" id="tags" placeholder="ecommerce, responsive, modern">
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="files-tab">
+                    <div class="form-group">
+                        <label>Product Files</label>
+                        <div class="file-upload" id="fileUpload">
+                            <p>Click to upload or drag and drop</p>
+                            <p><small>ZIP file containing all website files</small></p>
+                            <input type="file" id="productFiles" style="display:none;" accept=".zip,.rar,.7z">
+                        </div>
+                        <div id="fileInfo" style="display:none;">
+                            <p>File: <span id="fileName"></span> (<span id="fileSize"></span>)</p>
+                            <button type="button" id="removeFile">Remove File</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Preview Images</label>
+                        <div class="file-upload" id="imageUpload">
+                            <p>Click to upload or drag and drop</p>
+                            <p><small>Upload screenshots of your product</small></p>
+                            <input type="file" id="productImages" style="display:none;" accept="image/*" multiple>
+                        </div>
+                        <div class="preview-container" id="imagePreviews"></div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="preview-tab">
+                    <div class="form-group">
+                        <label>Live Preview URL (optional)</label>
+                        <input type="url" id="previewUrl" placeholder="https://example.com/preview">
+                    </div>
+                    <div class="form-group">
+                        <label>Demo Credentials (optional)</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <input type="text" id="demoUsername" placeholder="Demo username">
+                            <input type="text" id="demoPassword" placeholder="Demo password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="agreeTerms" required>
+                            I confirm that this product is my original work and I have the rights to sell it
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" style="display: flex; justify-content: space-between;">
+                <button type="button" id="prevTab" disabled>Previous</button>
+                <button type="button" id="nextTab">Next</button>
+                <button type="submit" id="submitBtn" style="display:none;">Submit Product</button>
+            </div>
+        </form>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/add-product.js"></script>
+</body>
+</html>

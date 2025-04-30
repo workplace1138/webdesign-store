@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Portal - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .seller-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 120px);
+        }
+        .seller-sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+        }
+        .seller-sidebar a {
+            display: block;
+            color: white;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .seller-main {
+            padding: 2rem;
+        }
+        .seller-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .seller-stat {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .seller-stat h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .products-list {
+            margin-top: 2rem;
+        }
+        .product-item {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem;
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .product-img {
+            width: 100px;
+            height: 80px;
+            background: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-actions a {
+            margin-left: 1rem;
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .seller-container {
+                grid-template-columns: 1fr;
+            }
+            .seller-sidebar {
+                display: none;
+            }
+            .product-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="seller-portal.html" class="active">Seller Portal</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="seller-container">
+        <div class="seller-sidebar">
+            <h3>Seller Menu</h3>
+            <a href="seller-portal.html">Overview</a>
+            <a href="add-product.html">Add Product</a>
+            <a href="seller-products.html">My Products</a>
+            <a href="seller-orders.html">Orders</a>
+            <a href="seller-earnings.html">Earnings</a>
+            <a href="seller-reviews.html">Reviews</a>
+            <a href="seller-settings.html">Settings</a>
+        </div>
+        
+        <div class="seller-main">
+            <h1>Seller Portal</h1>
+            <p>Manage your products and sales</p>
+            
+            <div class="seller-stats">
+                <div class="seller-stat">
+                    <h3>Total Products</h3>
+                    <p id="totalProducts">0</p>
+                </div>
+                <div class="seller-stat">
+                    <h3>Total Sales</h3>
+                    <p id="totalSales">0</p>
+                </div>
+                <div class="seller-stat">
+                    <h3>Earnings</h3>
+                    <p id="totalEarnings">$0.00</p>
+                </div>
+                <div class="seller-stat">
+                    <h3>Rating</h3>
+                    <p id="sellerRating">Not rated yet</p>
+                </div>
+            </div>
+            
+            <div class="products-list">
+                <h2>Recent Products</h2>
+                <a href="add-product.html" class="btn" style="margin-bottom:1rem;">Add New Product</a>
+                
+                <div id="sellerProductsList">
+                    <!-- Products will be loaded via JavaScript -->
+                    <div class="product-item">
+                        <div class="product-img">
+                            <img src="assets/placeholder.jpg" alt="Product" style="max-width:100%; max-height:100%;">
+                        </div>
+                        <div class="product-info">
+                            <h3>Product Name</h3>
+                            <p>Price: $0.00</p>
+                            <p>Sales: 0</p>
+                        </div>
+                        <div class="product-actions">
+                            <a href="#">Edit</a>
+                            <a href="#">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/seller.js"></script>
+</body>
+</html>

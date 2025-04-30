@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: calc(100vh - 120px);
+        }
+        .sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .main-content {
+            padding: 2rem;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .stat-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .recent-activity {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none; /* Mobile menu would be different */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="store.html">Store</a>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="dashboard.html">Overview</a>
+            <a href="profile.html">My Profile</a>
+            <a href="purchases.html">My Purchases</a>
+            <a href="messages.html">Messages</a>
+            <a href="settings.html">Settings</a>
+            <a href="become-seller.html">Become a Seller</a>
+        </div>
+        
+        <div class="main-content">
+            <h1>Dashboard</h1>
+            <p>Welcome back, <span id="userName">User</span>!</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>Purchases</h3>
+                    <p id="purchaseCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Favorites</h3>
+                    <p id="favoriteCount">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Messages</h3>
+                    <p id="messageCount">0</p>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <h2>Recent Activity</h2>
+                <div id="activityList">
+                    <div class="activity-item">
+                        <p>You logged in to your account</p>
+                        <small>Just now</small>
+                    </div>
+                    <!-- More activities will be loaded via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Preview - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .product-header {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .product-gallery {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .main-image {
+            width: 100%;
+            height: 400px;
+            background: #eee;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .main-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .thumbnail-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+        }
+        .thumbnail {
+            height: 80px;
+            background: #eee;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-info {
+            position: sticky;
+            top: 1rem;
+        }
+        .product-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-seller {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        .product-actions {
+            margin: 2rem 0;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 4px;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn-outline {
+            background: none;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        .product-tabs {
+            margin: 3rem 0;
+        }
+        .tab-headers {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        .tab-header {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-header.active {
+            border-bottom-color: var(--primary);
+            font-weight: bold;
+        }
+        .tab-content {
+            padding: 2rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .features-list {
+            columns: 2;
+            column-gap: 2rem;
+        }
+        .features-list li {
+            margin-bottom: 0.5rem;
+            break-inside: avoid;
+        }
+        .preview-frame {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            background: white;
+        }
+        .device-buttons {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        .device-btn {
+            padding: 0.5rem 1rem;
+            background: #eee;
+            border: none;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+        .device-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .product-header {
+                grid-template-columns: 1fr;
+            }
+            .features-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+    
+    <div class="preview-container">
+        <div class="product-header">
+            <div class="product-gallery">
+                <div class="main-image" id="mainImage">
+                    <img src="assets/placeholder.jpg" alt="Product Preview" id="currentImage">
+                </div>
+                <div class="thumbnail-container" id="thumbnailContainer">
+                    <!-- Thumbnails will be loaded via JavaScript -->
+                </div>
+            </div>
+            
+            <div class="product-info">
+                <h1 class="product-title" id="productTitle">Product Name</h1>
+                <p class="product-seller">by <span id="productSeller">Seller Name</span></p>
+                <div class="rating">
+                    <!-- Rating stars would go here -->
+                </div>
+                <p class="product-price" id="productPrice">$0.00</p>
+                
+                <div class="product-description">
+                    <p id="shortDescription">Product short description goes here.</p>
+                </div>
+                
+                <div class="product-actions">
+                    <a href="#" class="btn" id="purchaseBtn">Purchase Now</a>
+                    <a href="#" class="btn btn-outline" id="favoriteBtn">Add to Favorites</a>
+                </div>
+                
+                <div class="product-meta">
+                    <p><strong>Category:</strong> <span id="productCategory">Web Template</span></p>
+                    <p><strong>Last Updated:</strong> <span id="productDate">January 1, 2023</span></p>
+                    <p><strong>Tags:</strong> <span id="productTags">responsive, modern, clean</span></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="product-tabs">
+            <div class="tab-headers">
+                <div class="tab-header active" data-tab="description">Description</div>
+                <div class="tab-header" data-tab="features">Features</div>
+                <div class="tab-header" data-tab="preview">Live Preview</div>
+                <div class="tab-header" data-tab="reviews">Reviews</div>
+            </div>
+            
+            <div class="tab-content active" id="description-tab">
+                <div id="fullDescription">
+                    <p>Detailed product description goes here.</p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="features-tab">
+                <ul class="features-list" id="featuresList">
+                    <!-- Features will be loaded via JavaScript -->
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="preview-tab">
+                <div class="device-buttons">
+                    <button class="device-btn active" data-device="desktop">Desktop</button>
+                    <button class="device-btn" data-device="tablet">Tablet</button>
+                    <button class="device-btn" data-device="mobile">Mobile</button>
+                </div>
+                <div class="preview-frame" id="previewFrame">
+                    <!-- Website preview would be loaded here -->
+                    <div style="width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
+                        <h3>Website Preview Would Display Here</h3>
+                    </div>
+                </div>
+                <div id="demoCredentials" style="margin-top:1rem; display:none;">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Username: <span id="demoUsername"></span></p>
+                    <p>Password: <span id="demoPassword"></span></p>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="reviews-tab">
+                <div id="reviewsContainer">
+                    <p>No reviews yet. Be the first to review!</p>
+                </div>
+                
+                <div id="reviewForm" style="margin-top:2rem; display:none;">
+                    <h3>Write a Review</h3>
+                    <form>
+                        <div class="input-group">
+                            <label for="reviewRating">Rating</label>
+                            <select id="reviewRating" required>
+                                <option value="">Select Rating</option>
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="reviewText">Review</label>
+                            <textarea id="reviewText" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/preview.js"></script>
+</body>
+</html>

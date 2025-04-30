@@ -1,0 +1,20 @@
+/
+├── index.html             # Homepage
+├── login.html             # Login page
+├── register.html          # Registration
+├── about.html             # About/Introduction
+├── store.html             # Project store
+├── preview.html           # Website preview
+├── dashboard.html         # Dashboard
+├── become-seller.html     # Seller registration
+├── seller-portal.html     # Seller dashboard
+├── admin.html             # Admin panel
+├── chat.html              # Members chat
+├── profile.html           # Owner profile
+├── css/
+│   └── style.css          # Main styles
+├── js/
+│   ├── main.js            # Main JavaScript
+│   ├── auth.js            # Authentication
+│   └── preview.js         # Website preview logic
+└── assets/                # Images, etc.

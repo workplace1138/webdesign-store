@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Seller - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .seller-form-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .seller-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .seller-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ddd;
+            z-index: 1;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: #ddd;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.5rem;
+            font-weight: bold;
+        }
+        .step.active .step-number {
+            background: var(--primary);
+        }
+        .step.completed .step-number {
+            background: var(--secondary);
+        }
+        .step-text {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .step.active .step-text {
+            color: var(--dark);
+            font-weight: bold;
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        .portfolio-item {
+            border: 1px dashed #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+        }
+        .portfolio-item:hover {
+            border-color: var(--primary);
+        }
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .payment-method {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .payment-method.selected {
+            border-color: var(--primary);
+            background: rgba(52, 152, 219, 0.1);
+        }
+        .payment-method img {
+            max-width: 100%;
+            height: 30px;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="store.html">Store</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="seller-form-container">
+        <h1>Become a Seller</h1>
+        <p>Join our community of web designers and developers</p>
+        
+        <div class="seller-steps">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-text">Basic Info</div>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-text">Portfolio</div>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-text">Payment</div>
+            </div>
+            <div class="step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-text">Review</div>
+            </div>
+        </div>
+        
+        <form id="sellerForm">
+            <!-- Step 1: Basic Info -->
+            <div class="form-step active" id="step1">
+                <div class="input-group">
+                    <label for="sellerName">Display Name</label>
+                    <input type="text" id="sellerName" required>
+                    <small>This will be shown to customers</small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="sellerBio">Short Bio</label>
+                    <textarea id="sellerBio" required></textarea>
+                    <small>Tell customers about yourself and your skills</small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="sellerSkills">Skills</label>
+                    <input type="text" id="sellerSkills" required>
+                    <small>Comma separated list (e.g., HTML, CSS, JavaScript, UI/UX)</small>
+                </div>
+                
+                <div class="input-group">
+                    <label for="sellerExperience">Years of Experience</label>
+                    <select id="sellerExperience" required>
+                        <option value="">Select</option>
+                        <option value="0-1">0-1 years</option>
+                        <option value="1-3">1-3 years</option>
+                        <option value="3-5">3-5 years</option>
+                        <option value="5+">5+ years</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Step 2: Portfolio -->
+            <div class="form-step" id="step2">
+                <div class="input-group">
+                    <label>Portfolio Items</label>
+                    <p>Add links to your best work or upload samples</p>
+                    
+                    <div id="portfolioItems">
+                        <div class="portfolio-item">
+                            <div class="input-group">
+                                <label>Project Title</label>
+                                <input type="text" class="portfolio-title" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Project URL</label>
+                                <input type="url" class="portfolio-url" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Description</label>
+                                <textarea class="portfolio-desc" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="button" id="addPortfolioItem" class="btn" style="background:var(--secondary);">Add Another Project</button>
+                </div>
+                
+                <div class="input-group">
+                    <label>Or Upload Portfolio Files</label>
+                    <div class="file-upload" id="portfolioUpload">
+                        <p>Click to upload or drag and drop</p>
+                        <p><small>ZIP file containing your portfolio samples</small></p>
+                        <input type="file" id="portfolioFiles" style="display:none;" accept=".zip,.rar,.7z">
+                    </div>
+                    <div id="portfolioFileInfo" style="display:none;">
+                        <p>File: <span id="portfolioFileName"></span> (<span id="portfolioFileSize"></span>)</p>
+                        <button type="button" id="removePortfolioFile">Remove File</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Payment -->
+            <div class="form-step" id="step3">
+                <div class="input-group">
+                    <label>Payment Methods</label>
+                    <p>Select how you want to receive payments</p>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method" data-method="paypal">
+                            <img src="assets/paypal-logo.png" alt="PayPal">
+                            <p>PayPal</p>
+                        </div>
+                        <div class="payment-method" data-method="bank">
+                            <img src="assets/bank-transfer.png" alt="Bank Transfer">
+                            <p>Bank Transfer</p>
+                        </div>
+                        <div class="payment-method" data-method="stripe">
+                            <img src="assets/stripe-logo.png" alt="Stripe">
+                            <p>Stripe</p>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" id="paymentMethod" required>
+                </div>
+                
+                <div id="paypalDetails" class="payment-details" style="display:none;">
+                    <div class="input-group">
+                        <label for="paypalEmail">PayPal Email</label>
+                        <input type="email" id="paypalEmail">
+                    </div>
+                </div>
+                
+                <div id="bankDetails" class="payment-details" style="display:none;">
+                    <div class="input-group">
+                        <label for="bankName">Bank Name</label>
+                        <input type="text" id="bankName">
+                    </div>
+                    <div class="input-group">
+                        <label for="accountName">Account Name</label>
+                        <input type="text" id="accountName">
+                    </div>
+                    <div class="input-group">
+                        <label for="accountNumber">Account Number</label>
+                        <input type="text" id="accountNumber">
+                    </div>
+                    <div class="input-group">
+                        <label for="swiftCode">SWIFT/BIC Code</label>
+                        <input type="text" id="swiftCode">
+                    </div>
+                </div>
+                
+                <div id="stripeDetails" class="payment-details" style="display:none;">
+                    <div class="input-group">
+                        <p>You'll be asked to connect your Stripe account after registration</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4: Review -->
+            <div class="form-step" id="step4">
+                <h3>Review Your Information</h3>
+                
+                <div class="review-section">
+                    <h4>Basic Information</h4>
+                    <p><strong>Display Name:</strong> <span id="reviewName"></span></p>
+                    <p><strong>Bio:</strong> <span id="reviewBio"></span></p>
+                    <p><strong>Skills:</strong> <span id="reviewSkills"></span></p>
+                    <p><strong>Experience:</strong> <span id="reviewExperience"></span></p>
+                </div>
+                
+                <div class="review-section">
+                    <h4>Portfolio</h4>
+                    <div id="reviewPortfolio"></div>
+                </div>
+                
+                <div class="review-section">
+                    <h4>Payment Method</h4>
+                    <p><strong>Selected Method:</strong> <span id="reviewPaymentMethod"></span></p>
+                    <div id="reviewPaymentDetails"></div>
+                </div>
+                
+                <div class="input-group">
+                    <label>
+                        <input type="checkbox" id="agreeTerms" required>
+                        I agree to the <a href="#">Seller Terms and Conditions</a>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" id="prevStep" disabled>Previous</button>
+                <button type="button" id="nextStep">Next</button>
+                <button type="submit" id="submitBtn" style="display:none;">Submit Application</button>
+            </div>
+        </form>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/become-seller.js"></script>
+</body>
+</html>

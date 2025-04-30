@@ -1,0 +1,32 @@
+/webdesign-store/
+├── index.html
+├── about.html
+├── login.html
+├── register.html
+├── store.html
+├── preview.html
+├── dashboard.html
+├── seller-portal.html
+├── add-product.html
+├── become-seller.html
+├── admin.html
+├── chat.html
+├── profile.html
+├── css/
+│   └── style.css
+├── js/
+│   ├── auth.js
+│   ├── main.js
+│   ├── dashboard.js
+│   ├── seller.js
+│   ├── add-product.js
+│   ├── preview.js
+│   ├── become-seller.js
+│   ├── admin.js
+│   ├── chat.js
+│   └── profile.js
+└── assets/
+    ├── placeholder.jpg
+    ├── ecommerce.jpg
+    ├── portfolio.jpg
+    └── blog.jpg

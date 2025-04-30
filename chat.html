@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .chat-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            height: calc(100vh - 120px);
+        }
+        .chat-sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        .chat-main {
+            display: grid;
+            grid-template-rows: 1fr auto;
+            border-left: 1px solid #ddd;
+        }
+        .chat-header {
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+            background: white;
+        }
+        .chat-messages {
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 1rem;
+            max-width: 80%;
+        }
+        .message.sent {
+            margin-left: auto;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 12px 12px 0 12px;
+        }
+        .message.received {
+            margin-right: auto;
+            background: #f1f1f1;
+            padding: 0.8rem;
+            border-radius: 12px 12px 12px 0;
+        }
+        .message-info {
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+            color: #666;
+        }
+        .message.sent .message-info {
+            text-align: right;
+            color: rgba(255,255,255,0.7);
+        }
+        .chat-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5rem;
+            padding: 1rem;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+        .chat-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: none;
+            min-height: 50px;
+            max-height: 150px;
+        }
+        .chat-form button {
+            padding: 0 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .conversation {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .conversation.active {
+            background: rgba(255,255,255,0.1);
+        }
+        .conversation:hover {
+            background: rgba(255,255,255,0.05);
+        }
+        .conversation-name {
+            font-weight: bold;
+        }
+        .conversation-preview {
+            font-size: 0.9rem;
+            color: #aaa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .conversation-time {
+            font-size: 0.8rem;
+            color: #aaa;
+            text-align: right;
+        }
+        .empty-chat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .chat-container {
+                grid-template-columns: 1fr;
+            }
+            .chat-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="chat.html" class="active">Chat</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="chat-container">
+        <div class="chat-sidebar">
+            <h3>Conversations</h3>
+            <div id="conversationsList">
+                <!-- Conversations will be loaded via JavaScript -->
+            </div>
+        </div>
+        
+        <div class="chat-main">
+            <div class="chat-header" id="chatHeader">
+                <div class="empty-chat" id="emptyChat">
+                    <h3>Select a conversation</h3>
+                    <p>Choose from your existing conversations or start a new one</p>
+                </div>
+                <div id="activeChatHeader" style="display:none;">
+                    <h3 id="chatWithName">User Name</h3>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be loaded via JavaScript -->
+            </div>
+            
+            <div class="chat-form" id="chatForm" style="display:none;">
+                <textarea id="messageInput" placeholder="Type your message..."></textarea>
+                <button id="sendMessage">Send</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - WebDesign & Coding Services</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+        .profile-header {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: #eee;
+            overflow: hidden;
+            position: relative;
+        }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-avatar-edit {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            text-align: center;
+            padding: 0.5rem;
+            cursor: pointer;
+            display: none;
+        }
+        .profile-avatar:hover .profile-avatar-edit {
+            display: block;
+        }
+        .profile-info {
+            padding: 1rem 0;
+        }
+        .profile-name {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .profile-title {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .profile-bio {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .profile-tabs {
+            margin: 2rem 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+        }
+        .profile-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        .profile-tab.active {
+            border-bottom-color: var(--primary);
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .skill-tag {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .project-image {
+            height: 180px;
+            background: #eee;
+        }
+        .project-info {
+            padding: 1rem;
+        }
+        .edit-profile-btn {
+            padding: 0.5rem 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .profile-header {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .profile-avatar {
+                margin: 0 auto;
+            }
+            .profile-stats {
+                justify-content: center;
+            }
+            .profile-tabs {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" id="logoutBtn">Logout</a>
+        </nav>
+    </header>
+    
+    <div class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="assets/profile-placeholder.jpg" alt="Profile Picture" id="profileImage">
+                <div class="profile-avatar-edit" id="editAvatar">Edit</div>
+                <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+            </div>
+            
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">Owner Name</h1>
+                <p class="profile-title" id="profileTitle">Founder & Lead Developer</p>
+                <p class="profile-bio" id="profileBio">Experienced web designer and developer with over 5 years of experience creating beautiful, functional websites for clients worldwide. Specializing in responsive design, user experience, and clean code.</p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="projectsCount">50+</div>
+                        <div class="stat-label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="clientsCount">100+</div>
+                        <div class="stat-label">Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="rating">4.9</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                </div>
+                
+                <button class="edit-profile-btn" id="editProfileBtn">Edit Profile</button>
+            </div>
+        </div>
+        
+        <div class="profile-tabs">
+            <div class="profile-tab active" data-tab="about">About</div>
+            <div class="profile-tab" data-tab="skills">Skills</div>
+            <div class="profile-tab" data-tab="projects">Projects</div>
+            <div class="profile-tab" data-tab="reviews">Reviews</div>
+        </div>
+        
+        <div class="tab-content active" id="about-tab">
+            <h2>About Me</h2>
+            <div id="aboutContent">
+                <p>I'm passionate about creating digital experiences that are both beautiful and functional. With a background in both design and development, I understand how to bridge the gap between aesthetics and technology.</p>
+                <p>My approach focuses on understanding the client's needs and delivering solutions that exceed expectations. I believe in clean, maintainable code and designs that prioritize user experience.</p>
+                <p>When I'm not coding, you can find me sharing knowledge through tutorials, contributing to open source projects, or exploring new technologies.</p>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="skills-tab">
+            <h2>Skills & Expertise</h2>
+            <div id="skillsContent">
+                <h3>Technical Skills</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">React</span>
+                    <span class="skill-tag">Node.js</span>
+                    <span class="skill-tag">UI/UX Design</span>
+                    <span class="skill-tag">Responsive Design</span>
+                    <span class="skill-tag">Git</span>
+                </div>
+                
+                <h3>Design Tools</h3>
+                <div class="skills-list">
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">Adobe XD</span>
+                    <span class="skill-tag">Photoshop</span>
+                    <span class="skill-tag">Illustrator</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="projects-tab">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid" id="projectsGrid">
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>E-commerce Website</h3>
+                        <p>A complete online store with shopping cart and payment integration.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>Portfolio Template</h3>
+                        <p>Modern portfolio design for creative professionals.</p>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image"></div>
+                    <div class="project-info">
+                        <h3>Business Dashboard</h3>
+                        <p>Analytics dashboard with interactive charts and data visualization.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="reviews-tab">
+            <h2>Client Reviews</h2>
+            <div id="reviewsContent">
+                <div class="review-item">
+                    <div class="review-rating">★★★★★</div>
+                    <p class="review-text">"Absolutely amazing work! Delivered exactly what we needed ahead of schedule."</p>
+                    <p class="review-author">- Sarah Johnson, Business Owner</p>
+                </div>
+                <div class="review-item">
+                    <div class="review-rating">★★★★☆</div>
+                    <p class="review-text">"Great communication and attention to detail. Would definitely work with again."</p>
+                    <p class="review-author">- Michael Chen, Marketing Director</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 WebDesign & Coding Services</p>
+    </footer>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>
