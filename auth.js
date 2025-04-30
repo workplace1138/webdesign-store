@@ -1,57 +1,57 @@
-// Replace with your actual Firebase config
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
-const storage = firebase.storage();
 
-// Authentication state listener
-auth.onAuthStateChanged(user => {
-  // Handle user state changes
-  if (user) {
-    console.log("User logged in:", user.email);
-    // Update UI for logged in user
-    const logoutButtons = document.querySelectorAll('#logoutBtn');
-    logoutButtons.forEach(btn => {
-      btn.style.display = 'block';
-    });
-  } else {
-    console.log("User logged out");
-    // Update UI for logged out user
-    const logoutButtons = document.querySelectorAll('#logoutBtn');
-    logoutButtons.forEach(btn => {
-      btn.style.display = 'none';
-    });
-  }
-});
-
-// Logout functionality
-const logoutButtons = document.querySelectorAll('#logoutBtn');
-logoutButtons.forEach(btn => {
-  btn.addEventListener('click', (e) => {
+// Login function
+document.getElementById('loginForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
-    auth.signOut().then(() => {
-      window.location.href = 'index.html';
-    }).catch(error => {
-      console.error('Logout error:', error);
-    });
-  });
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Redirect to dashboard
+            window.location.href = 'dashboard.html';
+        })
+        .catch((error) => {
+            alert(error.message);
+        });
 });
 
-// Helper function to format Firebase timestamps
-function formatFirebaseTimestamp(timestamp) {
-  if (!timestamp) return '';
-  if (timestamp.toDate) {
-    return timestamp.toDate().toLocaleDateString();
-  }
-  return new Date(timestamp).toLocaleDateString();
-}
+// Registration function (for register.html)
+document.getElementById('registerForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const name = document.getElementById('name').value;
+    const userType = new URLSearchParams(window.location.search).get('type') || 'client';
+    
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            // Add user to database
+            return db.collection('users').doc(userCredential.user.uid).set({
+                name: name,
+                email: email,
+                type: userType,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            alert('Registration successful!');
+            window.location.href = userType === 'seller' ? 'seller-portal.html' : 'dashboard.html';
+        })
+        .catch((error) => {
+            alert(error.message);
+        });
+});
